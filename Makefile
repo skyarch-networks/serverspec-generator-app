@@ -10,5 +10,4 @@ pack:
 
 clean:
 	rm -rf build/serverspec-generator-*-x64
-	rm -rf build/*zip
-	rm -rf build/*tar.gz
+	git clean -xf
