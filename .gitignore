@@ -1,2 +1,5 @@
 node_modules/
 bundle.js
+/build/serverspec-generator-*-x64/
+/build/*.zip
+/build/*.tar.gz
