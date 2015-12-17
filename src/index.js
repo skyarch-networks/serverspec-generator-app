@@ -1,24 +1,27 @@
 // for example
 import * as main from 'serverspec-generator';
 import * as Vue from 'vue';
+const dialog = remote.require('electron').dialog;
+const fs = remote.require('fs');
 
 const $ = require('jquery');
 window.jQuery = $;
 window.$ = $;
-const ___ = require('bootstrap');
+require('bootstrap');
 
 
-const app = new main.App([], main.Info.value);
-console.log(app);
+const vueApp = new main.App([], main.Info.value);
+console.log(vueApp);
 
 $(document).on('click', '#save-btn', () => {
-  const file = new File([app.rubyCode], 'generated_spec.rb');
-  const url = window.URL.createObjectURL(file);
-  const a = document.createElement('a');
-  a.href = url;
-  a.setAttribute('download', file.name);
-  document.body.appendChild(a);
-  a.click();
+  dialog.showSaveDialog((fname) => {
+    if (!fname) { return; } // cancel
+    const code = vueApp.rubyCode + "\n";
+    fs.writeFile(fname, code, (err) => {
+      if (err) {throw err;}
+      alert('Saved!');
+    });
+  });
 });
 
-document.querySelector("#vue-main").appendChild(app.$el);
+document.querySelector("#vue-main").appendChild(vueApp.$el);
